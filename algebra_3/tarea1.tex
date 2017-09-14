@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage[left=2.5cm,right=2.75cm,bottom=3.5cm,top=2.5cm]{geometry}
+\usepackage{tikz-cd}
+\usetikzlibrary{cd}
+
+\def\Q{\mathbb{Q}}
+\def\R{\mathbb{R}} 
+\def\Z{\mathbb{Z}} 
+% Esto sirve para abreviar comandos que uno usa con frecuencia y así tener que tipear menos. El comando para hacer la Q de los racionales es \mathbb{Q}; con esta línea, yo le digo a LaTeX que de ahora en más \Q va a significar eso mismo. %
+
+\parskip 0.5em
+% El espacio entre párrafos. %
+
+\title{Ejercicio para entregar 1}
+\author{Ismael Bejarano}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Ejercicio.}
+
+.
+
+\subsection*{Resolución.}
+
+\subsubsection*{i)}
+
+Podemos observar que si $p$ es primo entonces $f(\sqrt{p}, \Q) = X^2 - p$, y este polinomio es 
+irreducible por el criterio de Einsenstein.
+
+Luego los $\sqrt{p_i}$ son algebraicos sobre $\Q$ y tenemos que:
+
+\[\Q(\sqrt{p_1},\dots,\sqrt{p_n}) = \Q[\sqrt{p_1},\dots,\sqrt{p_n}] = \Q[\sqrt{p_1}]\dots[\sqrt{p_n}] \]
+
+Además podemos ver que si $F = \Q(\sqrt{p_1},\dots,\sqrt{p_{n-1}})$ 
+entonces tenemos el siguiente diagrama:
+
+\[
+\begin{tikzcd}[column sep=tiny]
+    & F(\sqrt{p_n}) \arrow[ld, dash] \arrow[rd, dash] & \\
+\Q(\sqrt{p_n}) \arrow[rd, dash, "2"'] & & F \arrow[ld, dash] \\
+& \Q & 
+\end{tikzcd}
+\]
+
+Por XXXX, tenemos que $[F(\sqrt{p_n}):F] \le [\Q(\sqrt{p_n}):\Q] = 2$.
+Luego sólo puede ser que $[F(\sqrt{p_n}):F] = 1$ ó $2$.
+
+Para probar que $[\Q(\sqrt{p_1},\dots,\sqrt{p_n}):\Q] = 2^n$ procedemos 
+por inducción en $n$.
+
+Caso $n=1$. Tenemos que $[\Q(\sqrt{p_1}):\Q] = \textrm{gr}(f(\sqrt{p_1}, \Q)) = 2$.
+
+Caso $n=2$. Tomamos $F = \Q[\sqrt{p_1}]$ y $E = F[\sqrt{p_2}]$, entonces
+tenemos que $[E:\Q] = [E:F][F:\Q]$. Ahora sabemos que $[F:\Q] = 2$, y que 
+$[E:F] = 1$ ó $2$.
+
+Supongamos que $[E:F] = 1$, en ese caso tenemos que $\sqrt{p_2} \in F$.
+Luego $a + b\sqrt{p_1} = \sqrt{p_2}$, donde $a,b \in \Q$.
+
+Elevando al cuadrado y despejando tenemos que 
+
+\[ a^2 + 2ab \sqrt{p_1} + b^2 p_1 = p_2 \]
+
+Supongamos $a=0$, entonces $b^2 p_1 = p_2$. Tomando $b = \frac{r}{s}$ 
+con $r,s \in \Z$ coprimos.
+
+Tenemos 
+
+\[ r^2 p_1 = s^2 p_2 \]
+
+de donde $p_1 \mid s$ (porque los $p_i$ son primos relativos entre sí). 
+Similarmente $p_2 \mid r$. Si hacemos $s = p_1 s'$ y $r = p_2 r'$.
+
+\[ r'^2 p_2 = s'^2 p_1 \]
+
+Repitiendo el mismo proceso tenemos $r' = p_1 r"$ y $s' = p_2 s"$.
+Pero entonces $r = p_2 p_1 r"$ y $s = p_1 p_2 s"$ lo que contradice
+que $r$ y $s$ sean coprimos.
+
+Luego $a \ne 0$.
+
+Si $b = 0$ entonces $a^2 = p_2$. Si tomamos $a = \frac{u}{v}$, con 
+$u, v \in \Z$ coprimos.
+
+Tenemos 
+
+\[ u^2 = p_2 v^2 \]
+
+Luego tenemos $p_2 \mid u$, si hacemos $u = p_2 u'$ reemplazando
+nos queda
+
+\[ u'^2 p_2 = v^2 \]
+
+Esto implica que $p_2 \mid v$, de donde $v = p_2 v'$, pero esto
+implicaría que $u$ y $v$ no son coprimos. Absurdo.
+
+Luego $b \ne 0$.
+
+Como $ab \ne 0$ esto implica que $\sqrt{p_1} \in \Q$.
+Absurdo.
+
+Luego la suposición de que $[E:F] = 1$ es errónea y tiene
+que ser $[E:F] = 2$.
+
+O sea que $[\Q(\sqrt{p_1}, \sqrt{p_2}):\Q] = 2^2$
+
+Caso $n > 2$. Supongamos que sea cierto para $n$ queremos probar que
+es cierto para $n + 1$.
+
+Sea $F = \Q(\sqrt{p_1},\dots,\sqrt{p_n})$ y sea $E = F(\sqrt{p_{n+1}})$.
+Por hipótesis inductiva tenemos que $[F:\Q] = 2^n$, y además
+sabemos que $[E:F] \le 2$.
+
+
+\end{document}
