@@ -1,0 +1,323 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel}
+\usepackage{amsmath,amssymb}
+
+\title{Recuperatorio 2do parcial - Probalidad y Estadística (M)}
+\author{Ismael Bejarano - LU 302/02}
+\date{2017-07-28}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{3.a)}
+
+La idea es usar el teorema de continuidad de Paul Levy. Si $X_n, X$ son v.a.
+entonces vale que $X_n \overset{\mathcal D}{\rightarrow} X \iff
+\phi_{X_n}(t) \rightarrow \phi_{X}(t)\ \forall t\in \mathbb R$.
+
+Como $P(X_n=-1)=\frac{1}{2}$ y $P(X_n=1)=\frac{1}{2}$. Entonces:
+\[
+\begin{align*}
+\phi_{X_n}(t) &= E(e^{itX_n}) = e^{it(-1)}\times P(X_n=-1) + e^{it(1)}\times P(X_n=1) \\
+&= e^{-it}\times\frac{1}{2} + e^{it}\times\frac{1}{2} = \frac{1}{2}(e^{-it} + e^{it})
+\end{align*}
+\]
+
+Usando que $e^{\pm it} = \cos t \pm i\sin t$, sumando obtenemos que $e^{it}+e^{-it}=2\cos t$. 
+Similarmente restando obtenemos $e^{it}-e^{-it}=2i\sin t$
+
+Luego obtenemos
+\[\phi_{X_n}(t) = \cos t\]
+
+Ahora de $Y_n = \sum_{k=1}^n \frac{X_k}{2^k}$ usando que los $X_n$ son independientes entre si
+\[
+\begin{align*}
+\phi_{Y_n}(t) &= E(e^{itY_n}) = E\left(e^{it\left(\sum_{k=1}^n \frac{X_k}{2^k}\right)}\right) \\
+&= E\left(\prod_{k=1}^n e^{it\frac{X_k}{2^k}}\right) = \prod_{k=1}^n E(e^{it\frac{X_k}{2^k}}) \\
+&= \prod_{k=1}^n \phi_{X_k}\left(\frac{t}{2^k}\right)
+\end{align*}
+\]
+
+Ahora usando el resultado anterior
+\[
+\phi_{Y_n}(t) = \prod_{k=1}^n \cos\left(\frac{t}{2^k}\right)
+\]
+
+Usando la igualdad $2 \cos \theta \sin\theta = \sin 2\theta$, podemos escribir
+$\cos \theta = \frac{\sin 2\theta}{2\sin \theta}$, reemplazando en la ecuación anterior
+tenemos
+\[
+\begin{align*}
+\phi_{Y_n}(t) &= \prod_{k=1}^n \frac{\sin\left(\frac{t}{2^{k-1}}\right)}{2\sin\left(\frac{t}{2^k}\right)}
+= \frac{1}{2^n} \prod_{k=1}^n \frac{\sin\left(\frac{t}{2^{k-1}}\right)}{\sin\left(\frac{t}{2^k}\right)} \\
+&= \frac{1}{2^n} \times \frac{\sin\left(\frac{t}{2^{0}}\right)}{\cancel{\sin\left(\frac{t}{2^{1}}\right)}}
+\times \frac{\cancel{\sin\left(\frac{t}{2^{1}}\right)}}{\cancel{\sin\left(\frac{t}{2^{2}}\right)}} \times \cdots
+\times \frac{\cancel{\sin\left(\frac{t}{2^{n-1}}\right)}}{\sin\left(\frac{t}{2^{n}}\right)} \\
+&= \frac{1}{2^n}\times \frac{\sin(t)}{\sin\left(\frac{t}{2^{n}}\right)}
+= \frac{\sin(t)}{2^n \sin\left(\frac{t}{2^{n}}\right)}
+\end{align*}
+\]
+
+Ahora podemos escribir $2^n \sin\left(\frac{t}{2^{n}}\right) 
+= \frac{\sin\left(\frac{t}{2^{n}}\right)}{\frac{t}{2^n}}t$,
+cuando $n \rightarrow \infty$, entonces $\frac{t}{2^{n}} \rightarrow 0$, luego
+$\frac{\sin\left(\frac{t}{2^{n}}\right)}{\frac{t}{2^n}} \rightarrow 1$ y 
+$2^n \sin\left(\frac{t}{2^{n}}\right) 
+= \frac{\sin\left(\frac{t}{2^{n}}\right)}{\frac{t}{2^n}}t \rightarrow t$.
+
+De aquí tenemos cuando $n \rightarrow +\infty$ resulta
+\[\phi_{Y_n}(t) \rightarrow \frac{\sin(t)}{t}.\]
+
+Por otro lado si $U = \mathcal U[-1,1]$, tenemos que 
+$f_U(u) = \frac{1}{2} 1_{[-1,1]}(u)$ es su función de densidad.
+
+Entonces 
+\[
+\begin{align*}
+\phi_U(t) &= E(e^{itU}) = \int e^{itu} f_U(u) du \\
+&= \frac{1}{2} \int_{-1}^{1} e^{itu} du 
+= \frac{1}{2} \left.\left(\frac{e^{itu}}{it}\right)\right|_{u=-1}^{u=1} \\
+= \frac{1}{2} \frac{e^{it} - e^{-it}}{it}
+\end{align*}
+\]
+
+Usando que $e^{it} - e^{-it} = 2i\sin t$ visto anteriormente
+\[ \phi_U(t) = \frac{1}{\cancel{2}} \frac{\cancel{2i}\sin t}{\cancel{i}t} 
+= \frac{\sin t}{t} \]
+
+Acabamos de probar que $\phi_{Y_n}(t) \rightarrow \phi_U(t)$.
+Por el teorema de continuidad de Paul Levy esto implica que
+$Y_n \overset{\mathcal D}{\rightarrow} U$,
+donde $U = \mathcal U[-1, 1]$, como nos pedian probar.
+
+\subsection*{3.b)}
+
+Es la misma idea que en la parte a) usar las funciones características y ver que podemos
+aplicar Paul Levy.
+
+Sabemos que $W_n \sim Ber(\frac{1}{2})$, podemos calcula su función característica
+\[ \phi_{W_n}(t) = e^{it \times 0}\frac{1}{2} + e^{it\times 1}\frac{1}{2} 
+= \frac{1 + e^{it}}{2} \]
+
+Como $Z_n = \sum_{k=1}^n \frac{W_k}{2^k}$ usando la independencia de las $W_k$ 
+procedemos como en la part a) para obtener
+\[
+\phi_{Z_n}(t) = \prod_{k=1}^n \phi_{W_k}(\frac{t}{2^k}) 
+= \prod_{k=1}^n \frac{1 + e^{i\frac{t}{2^k}}}{2}
+= \frac{1}{2^n} \prod_{k=1}^n (1 + e^{i\frac{t}{2^k}})
+\]
+
+Usando la igualdad $(1 + e^{it})(1 - e^{it}) = 1 - ẹ^{2it}$ podemos escribir 
+$1 + e^{it} = \frac{1 - e^{2it}}{1 - e^{it}}$.
+
+Reemplazando en la ecuación anterior tenemos:
+\[
+\begin{align*}
+\phi_{Z_n}(t) &= \frac{1}{2^n} \prod_{k=1}^n \frac{1 - e^{i\frac{t}{2^{k-1}}}}{1 - e^{i\frac{t}{2^k}}} \\
+&= \frac{1}{2^n} \times \frac{1 - e^{i\frac{t}{2^{0}}}}{\cancel{1 - e^{i\frac{t}{2^{1}}}}}
+\times \frac{\cancel{1 - e^{i\frac{t}{2^{1}}}}}{\cancel{1 - e^{i\frac{t}{2^{2}}}}} \times \cdots
+\times \frac{\cancel{1 - e^{i\frac{t}{2^{n-1}}}}}{1 - e^{i\frac{t}{2^{n}}}} \\
+&= \frac{1}{2^n} \frac{1 - e^{it}}{1 - e^{i\frac{t}{2^{n}}}} = \frac{1 - e^{it}}{2^n (1 - e^{\frac{it}{2^{n}}})}
+\end{align*}
+\]
+
+Ahora podemos escribir $2^n (1 - e^{\frac{it}{2^{n}}}) = \frac{1 - e^{\frac{it}{2^{n}}}}{\frac{it}{2^n}}it$,
+cuando $n \rightarrow +\infty$ entonces $\frac{it}{2^n} \rightarrow 0$ luego 
+$\frac{1 - e^{\frac{it}{2^{n}}}}{\frac{it}{2^n}} \rightarrow -1$. O sea que 
+$2^n (1 - e^{\frac{it}{2^{n}}}) = \frac{1 - e^{\frac{it}{2^{n}}}}{\frac{it}{2^n}}it \rightarrow -it$.
+
+Entonces $\phi_{Z_n}(t) \rightarrow \frac{1 - e^{it}}{-it} = \frac{e^{it} - 1}{it}$.
+
+Si $U = \mathcal U[0, 1]$, entonces $f_U(u) = 1_{[0, 1]}(u)$ es su función de densidad.
+Podemos calcular la función característica como
+\[
+\begin{align*}
+\phi_U(t) &= E(e^{itU}) = \int e^{itu} f_U(u) du \\
+&= \int_0^1 e^{itu} du = \left.\left(\frac{e^{itu}}{it}\right)\right|_{u=0}^{u=1}
+= \frac{e^{it}}{it} - \frac{e^{0}}{it} = \frac{e^{it} - 1}{it}
+\end{align*}
+\]
+
+Con esto probamos que $\phi_{Z_n}(t) \rightarrow \phi_U(t)$, luego por el teorema de
+continuidad de Paul Levy tiene que ser $Z_n \overset{\mathcal D}{\rightarrow} U$
+
+\subsection*{5.a)}
+
+Sea $Y=X-\alpha$, sabemos que $P(Y \le y) = P(X - \alpha \le y) = P(X \le \alpha + y)$.
+\[
+\begin{align*}
+P(Y \le y) &= \int_{-\infty}^{\alpha + y} f_X(t) dt \\
+&= \int_{-\infty}^{\alpha + y} \lambda e^{-\lambda(t-\alpha)} 1_{[\alpha, +\infty)}(t) dt
+\end{align*}
+\]
+
+Haciendo el cambio de variable $u = t - \alpha$
+\[
+\begin{align*}
+P(Y \le y) 
+&= \int_{-\infty}^{y} \underbrace{\lambda e^{-\lambda u} 1_{[0, +\infty)}(u)}_{\text{densidad }Exp(\lambda)} du
+\end{align*}
+\]
+
+Luego $X - \alpha = Y \sim Exp(\lambda)$, como queríamos probar.
+
+\subsection*{5.b)}
+
+Sabemos que $X = \alpha + Y$ con $Y \sim Exp(\lambda)$. Entonces
+
+\[
+\begin{align*}
+E(X) &= E(\alpha + Y) = \alpha + E(Y) = \alpha + \frac{1}{\lambda} \\
+V(X) &= V(\alpha + Y) = V(Y) = \frac{1}{\lambda^2}
+\end{align*}
+\]
+
+Para la última ecuación tenemos tambien $V(X) = E(X^2) - E^2(X)$.
+
+Entonces podemos usar el método de momentos para estimar
+\[
+\begin{align*}
+\frac{1}{\hat\lambda^2} &= \frac{\sum_{k=1}^n X_k^2}{n} - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2 \\
+\frac{1}{\hat\lambda^2} &= \frac{n(\sum_{k=1}^n X_k^2) - (\sum_{k=1}^n X_k)^2}{n^2} \\
+\hat\lambda^2 &= \frac{n^2}{n(\sum_{k=1}^n X_k^2) - (\sum_{k=1}^n X_k)^2} \\
+\hat\lambda &= \frac{n}{\sqrt{n(\sum_{k=1}^n X_k^2) - (\sum_{k=1}^n X_k)^2}}
+\end{align*}
+\]
+
+Reemplazando en la primera tenemos un estimador de momentos para $\alpha$
+\[
+\begin{align*}
+\hat\alpha &= E(X) - \frac{1}{\lambda} \\
+&= \frac{\sum_{k=1}^n X_k}{n} - \sqrt{\frac{\sum_{k=1}^n X_k^2}{n}  - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2} \\
+&= \frac{\sum_{k=1}^n X_k}{n} - \frac{\sqrt{n(\sum_{k=1}^n X_k^2) - (\sum_{k=1}^n X_k)^2}}{n} 
+\end{align*}
+\]
+
+Por la ley débil de los grandes números sabemos que 
+\[
+\frac{\sum_{k=1}^n X_k}{n} \overset{p}{\rightarrow} E(X) = \alpha + \frac{1}{\lambda}
+\]
+
+Tomando $g(x) = x^2$, tenemos que tambien
+\[
+\begin{align*}
+g\left(\frac{\sum_{k=1}^n X_k}{n}\right) &\overset{p}{\rightarrow} g\left(\alpha + \frac{1}{\lambda}\right) \\
+\left(\frac{\sum_{k=1}^n X_k}{n}\right)^2 &\overset{p}{\rightarrow} \alpha^2 + \frac{2\alpha}{\lambda} + \frac{1}{\lambda^2}
+\end{align*}
+\]
+
+De igual manera
+\[
+\begin{align*}
+\frac{\sum_{k=1}^n X_k^2}{n} \overset{p}{\rightarrow} E(X^2) 
+&= V(X) + E^2(X) = \frac{1}{\lambda^2} + \left(\alpha + \frac{1}{\lambda}\right)^2 \\
+&= \frac{2}{\lambda^2} + \alpha^2 + \frac{2\alpha}{\lambda}
+\end{align*}
+\]
+
+Restando las dos últimas ecuaciones
+\[
+\begin{align*}
+\frac{\sum_{k=1}^n X_k^2}{n} - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2 &\overset{p}{\rightarrow} 
+\frac{\cancel{2}}{\lambda^2} + \cancel{\alpha^2} + \cancel{\frac{2\alpha}{\lambda}} 
+- \left(\cancel{\alpha^2} + \cancel{\frac{2\alpha}{\lambda}} + \cancel{\frac{1}{\lambda^2}}\right) \\
+&= \frac{1}{\lambda^2}
+\end{align*}
+\]
+
+Tomando $h(x) = \frac{1}{\sqrt{x}}$ y aplicando a la última ecuación tenemos
+\[
+\begin{align*}
+h\left(\frac{\sum_{k=1}^n X_k^2}{n} - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2 \right) &\overset{p}{\rightarrow} 
+h\left(\frac{1}{\lambda^2}\right) \\
+\hat\lambda &\overset{p}{\rightarrow} \frac{1}{\sqrt{\frac{1}{\lambda^2}}} = \lambda
+\end{align*}
+\]
+
+Con esto probamos que $\hat\lambda$ es consistente, es decir $\hat\lambda \overset{p}{\rightarrow} \lambda$.
+
+Para $\hat\alpha$ sabemos que 
+\[
+\hat\alpha = \frac{\sum_{k=1}^n X_k}{n} - \sqrt{\frac{\sum_{k=1}^n X_k^2}{n}  - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2}
+\]
+
+Por la ley débil de los grandes números vimos que
+\[
+\frac{\sum_{k=1}^n X_k}{n} \overset{p}{\rightarrow} \alpha + \frac{1}{\lambda}
+\]
+
+Tambien vimos que $\hat\lambda \overset{p}{\rightarrow} \lambda$, de donde
+\[
+\begin{align*}
+\frac{1}{\hat\lambda} &\overset{p}{\rightarrow} \frac{1}{\lambda} \\
+\sqrt{\frac{\sum_{k=1}^n X_k^2}{n}  - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2} 
+&\overset{p}{\rightarrow} \frac{1}{\lambda}
+\end{align*}
+\]
+
+Luego 
+\[
+\frac{\sum_{k=1}^n X_k}{n} - \sqrt{\frac{\sum_{k=1}^n X_k^2}{n}  - \left(\frac{\sum_{k=1}^n X_k}{n}\right)^2}
+\overset{p}{\rightarrow} \alpha + \cancel{\frac{1}{\lambda}} - \cancel{\frac{1}{\lambda}}
+\]
+
+De donde probamos que $\hat\alpha$ es consistente
+\[
+\hat\alpha \overset{p}{\rightarrow} \alpha
+\]
+
+\subsection*{5.c)}
+
+Tomando $\alpha = 5$ la función de verosimilitud sera
+\[
+\begin{align*}
+L(\lambda, x_1, \dots, x_n) &= \prod_{k=1}^n f_{\lambda}(x_k) 
+= \prod_{k=1}^n \lambda e^{-\lambda(x_k-5)} \\
+&= \lambda^n e^{-\lambda\sum_{k=1}^n x_k} e^{5\lambda n}
+\end{align*}
+\]
+
+Tomando logaritmo
+\[
+\begin{align*}
+g(\lambda) = \log(L(\lambda, x_1, \dots, x_n)) &= n \log(\lambda) - \lambda(\sum_{k=1}^n x_k) + 5\lambda n
+\end{align*}
+\]
+
+Derivamos e igualamos a 0 para buscar el máximo
+\[
+\begin{align*}
+g\prime(\lambda) &= \frac{n}{\lambda} - \sum_{k=1}^n x_k + 5 n = 0 \\
+\implies \frac{1}{\lambda} &= \frac{\sum_{k=1}^n x_k}{n} - 5
+\end{align*}
+\]
+
+De donde obtenemos
+\[
+\hat\lambda = \frac{1}{\frac{\sum_{k=1}^n x_k}{n} - 5}
+\]
+
+Derivamos una segunda vez para verificar que sea un máximo.
+\[
+\begin{align*}
+g\prime\prime(\lambda) &= -\frac{n}{\lambda^2} < 0 \\
+\end{align*}
+\]
+
+Luego es es un máximo.
+
+Por la ley débil de los grandes números $\frac{\sum_{k=1}^n x_k}{n} 
+\overset{p}{\rightarrow} E(X) = 5 + \frac{1}{\lambda}$.
+
+Entonces
+\[
+\hat\lambda = \frac{1}{\frac{\sum_{k=1}^n x_k}{n} - 5} 
+\overset{p}{\rightarrow} \frac{1}{\cancel{5} + \frac{1}{\lambda} - \cancel{5}} = \lambda
+\]
+
+Lo que prueba que el estimador $\hat\lambda$ obtenido usando la
+función de maxima verosimilitud es consistente.
+
+\end{document}
