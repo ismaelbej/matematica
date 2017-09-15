@@ -2,13 +2,23 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb}
 \usepackage[left=2.5cm,right=2.75cm,bottom=3.5cm,top=2.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{amsthm}
 \usepackage{tikz-cd}
 \usetikzlibrary{cd}
 
+\def\N{\mathbb{N}}
 \def\Q{\mathbb{Q}}
-\def\R{\mathbb{R}} 
-\def\Z{\mathbb{Z}} 
+\def\R{\mathbb{R}}
+\def\Z{\mathbb{Z}}
+\def\p[#1]{\sqrt{p_{#1}}}
+\def\q[#1]{\sqrt{q_{#1}}}
+\def\l[#1]{\lambda_{#1}}
 % Esto sirve para abreviar comandos que uno usa con frecuencia y así tener que tipear menos. El comando para hacer la Q de los racionales es \mathbb{Q}; con esta línea, yo le digo a LaTeX que de ahora en más \Q va a significar eso mismo. %
+
+\theoremstyle{definition}
+\newtheorem{obs}{Observación}
+\newtheorem*{demo}{Demotración}
 
 \parskip 0.5em
 % El espacio entre párrafos. %
@@ -21,53 +31,88 @@
 
 \maketitle
 
-\subsection*{Ejercicio.}
+\subsection*{Ejercicio.} Sean $p_1, p_2, \dots, p_n \in \N$ primos distintos. 
+Sea $E = \Q(\p[1],\p[2],\dots,\p[n])$.
 
-.
+\begin{enumerate}[(i)]
+\item Probar que $[E : \Q] = 2^n$.
+\item Sean $\l[1], \l[2], \dots, \l[n]$ números racionales no nulos. Probar
+que los $2^n$ números de la forma 
+$\pm\l[1]\p[1] \pm\l[2]\p[2] \pm \dots \pm\l[n]\p[n]$ son distintos dos a dos.
+\item Sea $\alpha = \l[1]\p[1] + \l[2]\p[2] + \dots + \l[n]\p[n]$. Probar
+que $E = \Q(\alpha)$.
+\end{enumerate}
 
-\subsection*{Resolución.}
+\subsection*{Solución:}
 
-\subsubsection*{i)}
+\begin{obs} 
 
-Podemos observar que si $p$ es primo entonces $f(\sqrt{p}, \Q) = X^2 - p$, y este polinomio es 
-irreducible por el criterio de Einsenstein.
+Si $q \in \Q$  no es un cuadrado en $\Q$ entonces el polinomio 
+$f(X) = X^2 - q$ es irreducible sobre $\Q$.
 
-Luego los $\sqrt{p_i}$ son algebraicos sobre $\Q$ y tenemos que:
+\end{obs}
 
-\[\Q(\sqrt{p_1},\dots,\sqrt{p_n}) = \Q[\sqrt{p_1},\dots,\sqrt{p_n}] = \Q[\sqrt{p_1}]\dots[\sqrt{p_n}] \]
+\begin{demo}
 
-Además podemos ver que si $F = \Q(\sqrt{p_1},\dots,\sqrt{p_{n-1}})$ 
-entonces tenemos el siguiente diagrama:
+Si fuera reducible existe $b \in \Q$ que es raíz de $f(X)$.
+Pero entonces $-b$ también en solución. Luego
+$f(X) = (X - b)(X + b)$, de donde $b^2 = q$ absurdo.
+
+\end{demo}
+
+\begin{obs}
+
+Si $\alpha=\sqrt{q}$, $q \in Q$ no es un cuadrado y 
+$F$ es una extensión sobre $\Q$ entonces 
+$[F[\alpha]:F] \le [\Q(\alpha):\Q] = 2$.
+
+\end{obs}
+
+\begin{demo}
+
+Tenemos el siguiente diagrama
 
 \[
 \begin{tikzcd}[column sep=tiny]
-    & F(\sqrt{p_n}) \arrow[ld, dash] \arrow[rd, dash] & \\
-\Q(\sqrt{p_n}) \arrow[rd, dash, "2"'] & & F \arrow[ld, dash] \\
+    & F(\alpha) \arrow[ld, dash] \arrow[rd, dash] & \\
+\Q(\alpha) \arrow[rd, dash] & & F \arrow[ld, dash] \\
 & \Q & 
 \end{tikzcd}
 \]
 
-Por XXXX, tenemos que $[F(\sqrt{p_n}):F] \le [\Q(\sqrt{p_n}):\Q] = 2$.
-Luego sólo puede ser que $[F(\sqrt{p_n}):F] = 1$ ó $2$.
+De donde inmediatamente tenemos que $[F(\alpha):F] \le [\Q(\alpha):\Q]$.
+Como $[\Q(\alpha):\Q] = gr f(\alpha,\Q) = 2$ por la observación
+anterior, entonces $[F(\alpha):F] \le 2$.
 
-Para probar que $[\Q(\sqrt{p_1},\dots,\sqrt{p_n}):\Q] = 2^n$ procedemos 
-por inducción en $n$.
+\end{demo}
 
-Caso $n=1$. Tenemos que $[\Q(\sqrt{p_1}):\Q] = \textrm{gr}(f(\sqrt{p_1}, \Q)) = 2$.
+\subsubsection*{(i)}
 
-Caso $n=2$. Tomamos $F = \Q[\sqrt{p_1}]$ y $E = F[\sqrt{p_2}]$, entonces
-tenemos que $[E:\Q] = [E:F][F:\Q]$. Ahora sabemos que $[F:\Q] = 2$, y que 
+Vamos a ver algo más general si $q_1,q_2,\dots,q_n \in \Z$ no son cuadrados y
+son primos entre sí dos a dos entonces $[\Q(\q[1],\q[2],\dots,\q[n]):\Q] = 2^n $.
+
+Por inducción en $n$.
+
+Caso $n=1$. Tenemos que $[\Q(\q[1]):\Q] = \textrm{gr}(f(\q[1], \Q)) = 2$.
+Usando la primera observación.
+
+Caso $n=2$. Tomamos $F = \Q(\q[1])$ y $E = F(\q[2])$, entonces
+tenemos que $[E:\Q] = [E:F][F:\Q]$. Sabemos que $[F:\Q] = 2$, y que 
 $[E:F] = 1$ ó $2$.
 
-Supongamos que $[E:F] = 1$, en ese caso tenemos que $\sqrt{p_2} \in F$.
-Luego $a + b\sqrt{p_1} = \sqrt{p_2}$, donde $a,b \in \Q$.
+Supongamos que $[E:F] = 1$, en ese caso tenemos que $\q[2] \in F$.
+Luego $a + b\q[1] = \q[2]$, donde $a,b \in \Q$.
 
 Elevando al cuadrado y despejando tenemos que 
 
-\[ a^2 + 2ab \sqrt{p_1} + b^2 p_1 = p_2 \]
+\[ a^2 + 2ab \q[1] + b^2 p_1 = \q[2] \]
 
-Supongamos $a=0$, entonces $b^2 p_1 = p_2$. Tomando $b = \frac{r}{s}$ 
-con $r,s \in \Z$ coprimos.
+Si $a=0$, entonces $b^2 \q[1] = \q[2]$. Multiplicando ambos lados 
+por $\q[1]$ tenemos $b^2 q_1 = \sqrt{q_1 q_2} \in \Q$. O sea que
+$q_2 r^4 = s^4 q_1$ es un cuadrado en
+
+Tomando $b = \frac{r}{s}$ 
+con $r,s \in \Z$ primos entre si.
 
 Tenemos 
 
@@ -80,12 +125,12 @@ Similarmente $p_2 \mid r$. Si hacemos $s = p_1 s'$ y $r = p_2 r'$.
 
 Repitiendo el mismo proceso tenemos $r' = p_1 r"$ y $s' = p_2 s"$.
 Pero entonces $r = p_2 p_1 r"$ y $s = p_1 p_2 s"$ lo que contradice
-que $r$ y $s$ sean coprimos.
+que $r$ y $s$ sean primos entre si.
 
 Luego $a \ne 0$.
 
 Si $b = 0$ entonces $a^2 = p_2$. Si tomamos $a = \frac{u}{v}$, con 
-$u, v \in \Z$ coprimos.
+$u, v \in \Z$ primos entre si.
 
 Tenemos 
 
@@ -116,5 +161,26 @@ Sea $F = \Q(\sqrt{p_1},\dots,\sqrt{p_n})$ y sea $E = F(\sqrt{p_{n+1}})$.
 Por hipótesis inductiva tenemos que $[F:\Q] = 2^n$, y además
 sabemos que $[E:F] \le 2$.
 
+
+Luego los $\sqrt{p_i}$ son algebraicos sobre $\Q$ y tenemos que:
+
+\[\Q(\sqrt{p_1},\dots,\sqrt{p_n}) = \Q[\sqrt{p_1},\dots,\sqrt{p_n}] = \Q[\sqrt{p_1}]\dots[\sqrt{p_n}] \]
+
+Además podemos ver que si $F = \Q(\sqrt{p_1},\dots,\sqrt{p_{n-1}})$ 
+entonces tenemos el siguiente diagrama:
+
+\[
+\begin{tikzcd}[column sep=tiny]
+    & F(\sqrt{p_n}) \arrow[ld, dash] \arrow[rd, dash] & \\
+\Q(\sqrt{p_n}) \arrow[rd, dash, "2"'] & & \ \quad F\quad \arrow[ld, dash] \\
+& \Q & 
+\end{tikzcd}
+\]
+
+Por XXXX, tenemos que $[F(\sqrt{p_n}):F] \le [\Q(\sqrt{p_n}):\Q] = 2$.
+Luego sólo puede ser que $[F(\sqrt{p_n}):F] = 1$ ó $2$.
+
+Para probar que $[\Q(\sqrt{p_1},\dots,\sqrt{p_n}):\Q] = 2^n$ procedemos 
+por inducción en $n$.
 
 \end{document}
